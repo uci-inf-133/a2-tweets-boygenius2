@@ -24,6 +24,62 @@ function parseTweets(runkeeper_tweets) {
 	const last_date = tweet_array.map(tweet => tweet.time.valueOf()).sort((a, b) => {return b-a;}).map(time => new Date(time))[0].toLocaleDateString("en-US", options);
 	document.getElementById('firstDate').innerText = first_date;
 	document.getElementById('lastDate').innerText = last_date;
+
+	// ---- Completed Events ----
+	// Filter out tweets by ensuring that the source is a completed event, then map them all into a 1 to reduce that array into a number
+	const numCompletedEvents = tweet_array.filter(tweet => tweet.source === "completed_event").map(tweet => tweet = 1).reduce( (total, true_event) => total + true_event, 0);
+	const pctCompletedEvents = Math.round((numCompletedEvents / tweet_array.length) * 10000) / 100;
+	let completed_events = document.getElementsByClassName('completedEvents');
+	for (let i = 0; i < completed_events.length; i++){
+		completed_events[i].innerText = numCompletedEvents;
+	}
+
+	completed_events = document.getElementsByClassName('completedEventsPct');
+	for (let i = 0; i < completed_events.length; i++){
+		completed_events[i].innerText = pctCompletedEvents + "%";
+	}
+
+	// ---- Live Events ----
+	// Filter out tweets by ensuring that the source is a live event, then map them all into a 1 to reduce that array into a number
+	const numLiveEvents = tweet_array.filter(tweet => tweet.source === "live_event").map(tweet => tweet = 1).reduce( (total, true_event) => total + true_event, 0);
+	const pctLiveEvents = Math.round((numLiveEvents / tweet_array.length) * 10000) / 100;
+	let live_events = document.getElementsByClassName('liveEvents');
+	for (let i = 0; i < live_events.length; i++){
+		live_events[i].innerText = numLiveEvents;
+	}
+
+	live_events = document.getElementsByClassName('liveEventsPct');
+	for (let i = 0; i < live_events.length; i++){
+		live_events[i].innerText = pctLiveEvents + "%";
+	}
+
+	// ---- Achievements ----
+	// Filter out tweets by ensuring that the source is an achievement, then map them all into a 1 to reduce that array into a number
+	const numAchievements = tweet_array.filter(tweet => tweet.source === "achievement").map(tweet => tweet = 1).reduce( (total, true_event) => total + true_event, 0);
+	const pctAchievements = Math.round((numAchievements / tweet_array.length) * 10000) / 100;
+	let achievements = document.getElementsByClassName('achievements');
+	for (let i = 0; i < achievements.length; i++){
+		achievements[i].innerText = numAchievements;
+	}
+
+	achievements = document.getElementsByClassName('achievementsPct');
+	for (let i = 0; i < achievements.length; i++){
+		achievements[i].innerText = pctAchievements + "%";
+	}
+
+	// ---- Miscellaneous ----
+	// Filter out tweets by ensuring that the source is an achievement, then map them all into a 1 to reduce that array into a number
+	const numMisc = tweet_array.filter(tweet => tweet.source === "miscellaneous").map(tweet => tweet = 1).reduce( (total, true_event) => total + true_event, 0);
+	const pctMisc = Math.round((numMisc / tweet_array.length) * 10000) / 100;
+	let misc = document.getElementsByClassName('miscellaneous');
+	for (let i = 0; i < misc.length; i++){
+		misc[i].innerText = numMisc;
+	}
+
+	misc = document.getElementsByClassName('miscellaneousPct');
+	for (let i = 0; i < misc.length; i++){
+		misc[i].innerText = pctMisc + "%";
+	}
 }
 
 //Wait for the DOM to load
