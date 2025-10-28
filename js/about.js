@@ -68,7 +68,7 @@ function parseTweets(runkeeper_tweets) {
 	}
 
 	// ---- Miscellaneous ----
-	// Filter out tweets by ensuring that the source is an achievement, then map them all into a 1 to reduce that array into a number
+	// Filter out tweets by ensuring that the source isn't any of the three listed above, then map them all into a 1 to reduce that array into a number
 	const numMisc = tweet_array.filter(tweet => tweet.source === "miscellaneous").map(tweet => tweet = 1).reduce( (total, true_event) => total + true_event, 0);
 	const pctMisc = Math.round((numMisc / tweet_array.length) * 10000) / 100;
 	let misc = document.getElementsByClassName('miscellaneous');
@@ -79,6 +79,21 @@ function parseTweets(runkeeper_tweets) {
 	misc = document.getElementsByClassName('miscellaneousPct');
 	for (let i = 0; i < misc.length; i++){
 		misc[i].innerText = pctMisc + "%";
+	}
+
+	// Written text
+	const numWrittenTweets = tweet_array.filter(tweet => tweet.written == true).map(tweet => tweet = 1).reduce( (total, true_event) => total + true_event, 0);
+	const pctWrittenTweets = Math.round((numWrittenTweets / numCompletedEvents) * 10000) / 100;
+	let written_tweets = document.getElementsByClassName('written');
+	for (let i = 0; i < written_tweets.length; i++)
+	{
+		written_tweets[i].innerText = numWrittenTweets;
+	}
+
+	written_tweets = document.getElementsByClassName('writtenPct');
+	for (let i = 0; i < written_tweets.length; i++)
+	{
+		written_tweets[i].innerText = pctWrittenTweets + "%";
 	}
 }
 

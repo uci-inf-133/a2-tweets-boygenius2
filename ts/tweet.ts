@@ -11,10 +11,10 @@ class Tweet {
     get source():string {
         if (this.text.includes("complete") || this.text.includes("posted")){
             return "completed_event";
-        } else if (this.text.toLowerCase().includes("achieve")){
-            return "achievement";
         } else if (this.text.toLowerCase().includes("live")){
             return "live_event";
+        } else if (this.text.toLowerCase().includes("achieve")){
+            return "achievement";
         } else {
             return "miscellaneous";
         }
@@ -23,7 +23,13 @@ class Tweet {
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
         //TODO: identify whether the tweet is written
-        return false;
+        // Removes the hastag and the link
+        if (this.source === "completed_event" && this.text.substring(0, this.text.indexOf("#Runkeeper")).substring(0, this.text.indexOf("https://t.co")).trimEnd().includes("Check it out!")){
+            return false;
+        } else{
+            return true;
+        }
+        
     }
 
     get writtenText():string {
